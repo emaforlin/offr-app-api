@@ -8,7 +8,13 @@ import (
 	"github.com/emaforlin/offr-app-api/domain/repositories"
 	"github.com/go-sql-driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
+
+// BindRoles implements repositories.AccountRepository.
+func (r *mysqlRepositoryImpl) BindRoles(ctx context.Context, email string, roles ...string) ([]string, error) {
+	panic("unimplemented")
+}
 
 // Create implements AccountRepository.
 func (r *mysqlRepositoryImpl) Create(ctx context.Context, account *entities.Account) error {
@@ -39,7 +45,7 @@ func (r *mysqlRepositoryImpl) GetByEmail(ctx context.Context, email uint) (*enti
 func (r *mysqlRepositoryImpl) GetByID(ctx context.Context, id uint) (*entities.Account, error) {
 	var accountFound = &entities.Account{}
 
-	if err := r.db.First(accountFound, id).Error; err != nil {
+	if err := r.db.Preload(clause.Associations).Find(accountFound, id).Error; err != nil {
 		return nil, errors.New("failed to find account")
 	}
 	return accountFound, nil

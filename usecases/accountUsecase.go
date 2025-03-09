@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"context"
+	"time"
 
 	"github.com/emaforlin/offr-app-api/domain/entities"
 	"github.com/emaforlin/offr-app-api/domain/repositories"
@@ -26,7 +27,7 @@ func (u *accountUsecaseImpl) SignupAccount(ctx context.Context, account *models.
 		Profile: entities.Profile{
 			Firstname: account.Firstname,
 			Lastname:  account.Lastname,
-			Birthday:  account.Birthday,
+			Birthday:  account.Birthday.Truncate(time.Hour),
 		},
 	})
 }
