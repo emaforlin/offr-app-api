@@ -19,7 +19,16 @@ func (u *accountUsecaseImpl) GetAccountByID(ctx context.Context, id uint) (*enti
 
 // SignupAccount implements AccountUsecase.
 func (u *accountUsecaseImpl) SignupAccount(ctx context.Context, account *models.SignupAccountDto) error {
-	return u.SignupAccount(ctx, account)
+	return u.repo.Create(ctx, &entities.Account{
+		Email:    account.Email,
+		Username: account.Username,
+		Password: account.Password,
+		Profile: entities.Profile{
+			Firstname: account.Firstname,
+			Lastname:  account.Lastname,
+			Birthday:  account.Birthday,
+		},
+	})
 }
 
 func NewAccountUsecase(repo repositories.AccountRepository) AccountUsecase {
