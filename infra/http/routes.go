@@ -7,11 +7,18 @@ import (
 
 func InitRoutes(router *gin.Engine, accountHandlers *handlers.AccountHandler) *gin.Engine {
 	main := router.Group("/api/v1")
-	main.POST("/signup", accountHandlers.HandleSignupAccount)
+
+	authGroup := main.Group("/auth")
+
+	authGroup.POST("/signup", accountHandlers.HandleSignupAccount)
 
 	accountGroup := main.Group("/accounts")
 	{
-		accountGroup.GET("/:id", accountHandlers.HandleGetAccountByEmail)
+		// account group
+		accountGroup.GET("/:id", accountHandlers.HandleGetAccountByID)
+
+		// roles group
+		accountGroup.POST("/:id/roles", accountHandlers.HandleBindRoles)
 	}
 	return router
 }

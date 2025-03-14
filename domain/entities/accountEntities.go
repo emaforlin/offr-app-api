@@ -7,10 +7,10 @@ import (
 
 type Account struct {
 	gorm.Model
-	Email    string `gorm:"not null;unique;"`
+	Email    string `gorm:"not null;unique"`
 	Username string `gorm:"not null;unique"`
-	Password string `gorm:"not null"`
-	Roles    []Role `gorm:"many2many:account_roles"`
+	Password string `gorm:"not null" json:"password,omitempty"`
+	Roles    []Role `gorm:"many2many:account_roles;constraint:OnDelete:CASCADE;"`
 	Profile  Profile
 }
 

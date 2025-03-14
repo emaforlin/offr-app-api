@@ -1,7 +1,11 @@
 package entities
 
 type Role struct {
-	ID    uint      `gorm:"primaryKey;autoincrement"`
-	Role  string    `gorm:"unique;not null"`
-	Users []Account `gorm:"many2many:account_roles"`
+	ID   uint   `gorm:"primaryKey;autoincrement" json:"-"`
+	Role string `gorm:"unique;not null" json:"role"`
+}
+
+type UserRole struct {
+	UserID uint `gorm:"primaryKey"`
+	RoleID uint `gorm:"primaryKey"`
 }
