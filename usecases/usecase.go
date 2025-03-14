@@ -10,4 +10,5 @@ import (
 type AccountUsecase interface {
 	SignupAccount(ctx context.Context, account *models.SignupAccountDto) error
 	GetAccountByID(ctx context.Context, id uint) (*entities.Account, error)
+	BindRole(ctx context.Context, roleBinding *models.RoleBindDto) error
 }
